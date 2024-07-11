@@ -23,22 +23,22 @@ export type ArticleParamsFormProps = {
 };
 
 export const ArticleParamsForm = ({ settings }: ArticleParamsFormProps) => {
-	const [isOpened, setIsOpened] = useState<boolean>(false);
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const [formState, setFormState] = useState<ArticleStateType>(defaultArticleState);
 	const ref = useRef<HTMLFormElement | null>(null);
 
 	// закрытие формы 
 	useEffect(() => {
-		if (!isOpened) return;
+		if (!isMenuOpen) return;
 
 		function closeSide(event: KeyboardEvent) {
 			if (event.key === 'Enter') {
-				setIsOpened(false);
+				setIsMenuOpen(false);
 			}
 		}
 		function closeSideClick(event: MouseEvent) {
 			if (ref.current && !ref.current.contains(event.target as Node)) {
-				setIsOpened(false);
+				setIsMenuOpen(false);
 			}
 		}
 
@@ -49,7 +49,7 @@ export const ArticleParamsForm = ({ settings }: ArticleParamsFormProps) => {
 			document.removeEventListener('keydown', closeSide);
 			document.removeEventListener('mousedown', closeSideClick);
 		};
-	}, [isOpened]);
+	}, [isMenuOpen]);
 
 	// отправка формы
 	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -68,15 +68,15 @@ export const ArticleParamsForm = ({ settings }: ArticleParamsFormProps) => {
 	return (
 		<>
 			<ArrowButton
-				sideState={isOpened}
-				clickOpen={() => setIsOpened((currentIsOpened) => !currentIsOpened)}
+				sideState={isMenuOpen}
+				clickOpen={() => setIsMenuOpen((currentIsOpened) => !currentIsOpened)}
 			/>
 			<div
-				onClick={() => setIsOpened(false)}
-				className={clsx(styles.overlay, isOpened && styles.overlay_open)}></div>
+				onClick={() => setIsMenuOpen(false)}
+				className={clsx(styles.overlay, isMenuOpen && styles.overlay_open)}></div>
 
 			<aside
-				className={clsx(styles.container, isOpened && styles.container_open)}>
+				className={clsx(styles.container, isMenuOpen && styles.container_open)}>
 				<form
 					onSubmit={handleSubmit}
 					onReset={handleReset}
