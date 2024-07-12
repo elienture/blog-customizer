@@ -2,6 +2,8 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 import { ArrowButton } from './ArrowButton';
 
+import { useState } from 'react';
+
 const meta: Meta<typeof ArrowButton> = {
 	component: ArrowButton,
 };
@@ -9,12 +11,14 @@ const meta: Meta<typeof ArrowButton> = {
 export default meta;
 type Story = StoryObj<typeof ArrowButton>;
 
+
 export const ArrowButtonStory: Story = {
 	render: () => {
-		return (
-			<>
-				<ArrowButton />
-			</>
-		);
+	const [isActive, setIsActive] = useState<boolean>(false);
+	  return (
+		<>
+		  <ArrowButton  sideState={isActive} clickOpen={() => setIsActive((prevActive) => !prevActive)}/>
+		</>
+	  );
 	},
-};
+  };
